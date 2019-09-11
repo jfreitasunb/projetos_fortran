@@ -52,4 +52,25 @@ program diffusion_1d
     if (courant .gt. 0.5D0) then
         print *, '# Warning: courant > 0.5'
     endif
+
+    open(unit = 11, file = 'diffusion_1d.dat') !data file
+
+    !---------Initial condition at t = 0 -------------------------------------------------
+    !u(x, 0) = sin(pi x)
+    do i = 1, Nx
+        x = (i - 1)*dx
+        u(i) = sin(PI*x)
+    enddo
+
+    u(1) = 0.0D0
+    
+    u(Nx) = 0.0D0
+
+    do i = 1, Nx
+        x = (i - 1)*dx
+        write(11,*) 0.0D0, u, u(i)
+    enddo
+
+    write(11, *) ' '
+
 end program diffusion_1d
