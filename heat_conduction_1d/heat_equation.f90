@@ -35,7 +35,7 @@ program diffusion_1d
 
     ! ------Initialize
 
-    dx = 1.0D0/(Nt - 1)
+    dx = 1.0D0/(Nx - 1)
     
     dt = tf / (Nt - 1)
 
