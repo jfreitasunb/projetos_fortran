@@ -21,7 +21,17 @@ program diffusion_1d
     real(8), parameter :: PI = 3.1415926535897932D0
     real(8), dimension(P) :: u, d2udx2
     real(8) :: t, x, dx, dt, tf, courant
-    integer :: Nx, Nt, i, j 
+    integer :: Nx, Nt, i, j
+
+! --------Input:
+print *,'# Enter: Nx, Nt, tf: (P= ',P, ' Nx must be < P)'
+read *, Nx, Nt, tf
+
+if (Nx .ge. P) stop 'Nx >= P'
+
+if (Nx .le. 3) stop 'Nx <= 3'
+
+if (Nt .le. 2) stop 'Nx <= 2'
 
     
 end program diffusion_1d
