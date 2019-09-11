@@ -73,4 +73,28 @@ program diffusion_1d
 
     write(11, *) ' '
 
+    !------------------------------------------------------------------------------------------
+    !----------Calculate time evolution:
+    do j = 2, Nt
+        t = (j - 1)*dt
+
+        !--------second derivative:
+        do i = 2, Nx-1
+            d2udx2(i) = courant*(u(i+1) - 2.0D0*u(i) + u(i-1))
+        enddo
+
+        !-------update
+        do i = 2, Nx-1
+            u(i) = u(i) + d2udx2(i)
+        enddo
+
+        do i = 1, Nx
+            x = (i - 1)*dx
+            
+            write(11, *) t, x, u(i)
+        enddo
+        
+        write(11, *)' '
+    enddo
+    close(11)
 end program diffusion_1d
