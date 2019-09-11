@@ -23,15 +23,33 @@ program diffusion_1d
     real(8) :: t, x, dx, dt, tf, courant
     integer :: Nx, Nt, i, j
 
-! --------Input:
-print *,'# Enter: Nx, Nt, tf: (P= ',P, ' Nx must be < P)'
-read *, Nx, Nt, tf
+    ! --------Input:
+    print *,'# Enter: Nx, Nt, tf: (P= ',P, ' Nx must be < P)'
+    read *, Nx, Nt, tf
 
-if (Nx .ge. P) stop 'Nx >= P'
+    if (Nx .ge. P) stop 'Nx >= P'
 
-if (Nx .le. 3) stop 'Nx <= 3'
+    if (Nx .le. 3) stop 'Nx <= 3'
 
-if (Nt .le. 2) stop 'Nx <= 2'
+    if (Nt .le. 2) stop 'Nx <= 2'
 
+    ! ------Initialize
+
+    dx = 1.0D0/(Nt - 1)
     
+    dt = tf / (Nt - 1)
+
+    courant = dt/dx**2
+
+    print *, '#1 1d Diffusion Equation: 0 <= x <= 1, 0 <= t <= tf'
+
+    print *, '# dx = ', dx, ' dt = ', dt, ' tf = ', tf
+
+    print *, '# Nx = ', Nx, ' Nt = ', Nt
+
+    print *, '# Courant Number = ', courant
+
+    if (courant .gt. 0.5D0) then
+        print *, '# Warning: courant > 0.5'
+    endif
 end program diffusion_1d
