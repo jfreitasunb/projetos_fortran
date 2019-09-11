@@ -14,3 +14,14 @@
 ! u ( x , t ) = s i n ( p i * x ) * exp(− p i * p i * t )
 !
 ! =================================================================================
+
+program diffusion_1d
+    implicit none
+    integer, parameter :: P = 100000    !Max no of points
+    real(8), parameter :: PI = 3.1415926535897932D0
+    real(8), dimension(P) :: u, d2udx2
+    real(8) :: t, x, dx, dt, tf, courant
+    integer :: Nx, Nt, i, j 
+
+    
+end program diffusion_1d
