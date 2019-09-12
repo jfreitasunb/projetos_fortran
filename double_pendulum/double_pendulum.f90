@@ -5,7 +5,7 @@ program double_pendulum
 
     real (kind = extra) :: x1, y1, L1, theta1inicial, m1, x2, y2, L2, theta2inicial, m2, omega1, omega2 !Posicao, comprimento, angulo e massa dos pêndulos
 
-    real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44
+    real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44, T
 
     real (kind = extra), parameter :: PI = 4.D0*DATAN(1.D0)
 
@@ -13,30 +13,36 @@ program double_pendulum
 
     real (kind = extra), parameter :: DT = 0.0003D0 !Mudança no tempo.
 
+    integer, parameter :: n = 1000 !Numero de iterações
+
+    integer :: i
+
     !-----------Leitura dos dados iniciais
     print*, '#Entre com o comprimento, angulo e massa dos pendulos: L1 theta1 m1 L2 theta2 m2: '
 
     read*, L1, theta1inicial, m1, L2, theta2inicial, m2
 
-    ! do i=1,n
+    T = 0D0
+
+    do i=1,n
         
-        k11 = DT*theta1inicial
+        k11 = T*theta1inicial
         
-        k12 = DT*(theta1inicial + k11/2D0)
+        k12 = T*(theta1inicial + k11/2D0)
         
-        k13 = DT*(theta1inicial + k12/2D0)
+        k13 = T*(theta1inicial + k12/2D0)
         
-        k14 = DT*(theta1inicial + k13)
+        k14 = T*(theta1inicial + k13)
         
         theta1inicial = theta1inicial + (k11 + 2*k12 + 2*k13 + k14)/6D0
 
-        k21 = DT*theta2inicial
+        k21 = T*theta2inicial
         
-        k22 = DT*(theta2inicial + k21/2D0)
+        k22 = T*(theta2inicial + k21/2D0)
         
-        k23 = DT*(theta2inicial + k22/2D0)
+        k23 = T*(theta2inicial + k22/2D0)
         
-        k24 = DT*(theta2inicial + k23)
+        k24 = T*(theta2inicial + k23)
         
         theta2inicial = theta2inicial + (k21 + 2*k22 + 2*k23 + k24)/6D0
 
@@ -54,10 +60,10 @@ program double_pendulum
 
 
 
-        ! t = a + i*h
+        T = T + i*DT
 
         ! write(11,*)t, w
-    ! enddo
+    enddo
 
 
     contains
