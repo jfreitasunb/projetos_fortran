@@ -41,25 +41,25 @@ program double_pendulum
 
     do i=1,n
         
-        k11 = T*theta1(i)
+        k11 = T*omega1(i)
         
-        k12 = T*(theta1(i) + k11/2D0)
+        k12 = T*(omega1(i) + k11/2D0)
         
-        k13 = T*(theta1(i) + k12/2D0)
+        k13 = T*(omega1(i) + k12/2D0)
         
-        k14 = T*(theta1(i) + k13)
+        k14 = T*(omega1(i) + k13)
         
-        theta1(i) = theta1(i) + (k11 + 2*k12 + 2*k13 + k14)/6D0
+        theta1(i+1) = theta1(i) + (k11 + 2*k12 + 2*k13 + k14)/6D0
 
-        k21 = T*theta2(i)
+        k21 = T*omega2(i)
         
-        k22 = T*(theta2(i) + k21/2D0)
+        k22 = T*(omega2(i) + k21/2D0)
         
-        k23 = T*(theta2(i) + k22/2D0)
+        k23 = T*(omega2(i) + k22/2D0)
         
-        k24 = T*(theta2(i) + k23)
+        k24 = T*(omega2(i) + k23)
         
-        theta2(i) = theta2(i) + (k21 + 2*k22 + 2*k23 + k24)/6D0
+        theta2(i+1) = theta2(i) + (k21 + 2*k22 + 2*k23 + k24)/6D0
 
         ! k31 = h*funcao_runge_kutta(t, w)
         
