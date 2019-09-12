@@ -55,12 +55,12 @@ program double_pendulum
                                 /(L1*(2*m1 + m2 - m2*cos(2*theta1 - 2*theta2)))
     end function aceleracao_angulo1
 
-    function funcao_runge_kutta2(t, w)
+    function aceleracao_angulo2(t, w)
         
-        real (kind = extra) funcao_runge_kutta2, t, w
+        real (kind = extra) aceleracao_angulo2, t, w
 
-        funcao_runge_kutta2 = cos(2*t) + sin(3*t)
-    end function funcao_runge_kutta2
+        aceleracao_angulo2 = cos(2*t) + sin(3*t)
+    end function aceleracao_angulo2
 
     
 end program double_pendulum
