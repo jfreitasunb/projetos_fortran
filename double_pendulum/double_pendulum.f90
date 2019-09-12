@@ -3,7 +3,9 @@ program double_pendulum
 
     integer, parameter :: extra  = selected_real_kind(p=24,r=1000)
 
-    real (kind = extra) :: x1, y1, L1, theta1inicial, m1, x2, y2, L2, theta2inicial, m2, omega1, omega2 !Posicao, comprimento, angulo e massa dos pêndulos
+    real (kind = extra) :: x1, y1, L1, m1, x2, y2, L2, m2 !Posicao, comprimento, angulo e massa dos pêndulos
+
+    real (kind = extra), dimension(:), allocatable :: theta1, theta2, omega1, omega2
 
     real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44, T
 
@@ -15,36 +17,49 @@ program double_pendulum
 
     integer, parameter :: n = 1000 !Numero de iterações
 
-    integer :: i
+    integer :: i, ERRO
+
+    allocate (theta1(1:n), STAT=ERRO)
+    
+    allocate (theta2(1:n), STAT=ERRO)
+
+    allocate (omega1(1:n), STAT=ERRO)
+
+    allocate (omega2(1:n), STAT=ERRO)
 
     !-----------Leitura dos dados iniciais
-    print*, '#Entre com o comprimento, angulo e massa dos pendulos: L1 theta1 m1 L2 theta2 m2: '
+    print*, '#Entre com o comprimento, angulo, massa e velocidade inicial do pendulo 1:'
 
-    read*, L1, theta1inicial, m1, L2, theta2inicial, m2
+    read*, L1, theta1(1), m1, omega1(1)
+
+    !-----------Leitura dos dados iniciais
+    print*, '#Entre com o comprimento, angulo, massa e velocidade inicial do pendulo 2:'
+
+    read*, L2, theta2(1), m2, omega2(1)
 
     T = 0D0
 
     do i=1,n
         
-        k11 = T*theta1inicial
+        k11 = T*theta1(i)
         
-        k12 = T*(theta1inicial + k11/2D0)
+        k12 = T*(theta1(i) + k11/2D0)
         
-        k13 = T*(theta1inicial + k12/2D0)
+        k13 = T*(theta1(i) + k12/2D0)
         
-        k14 = T*(theta1inicial + k13)
+        k14 = T*(theta1(i) + k13)
         
-        theta1inicial = theta1inicial + (k11 + 2*k12 + 2*k13 + k14)/6D0
+        theta1(i) = theta1(i) + (k11 + 2*k12 + 2*k13 + k14)/6D0
 
-        k21 = T*theta2inicial
+        k21 = T*theta2(i)
         
-        k22 = T*(theta2inicial + k21/2D0)
+        k22 = T*(theta2(i) + k21/2D0)
         
-        k23 = T*(theta2inicial + k22/2D0)
+        k23 = T*(theta2(i) + k22/2D0)
         
-        k24 = T*(theta2inicial + k23)
+        k24 = T*(theta2(i) + k23)
         
-        theta2inicial = theta2inicial + (k21 + 2*k22 + 2*k23 + k24)/6D0
+        theta2(i) = theta2(i) + (k21 + 2*k22 + 2*k23 + k24)/6D0
 
         ! k31 = h*funcao_runge_kutta(t, w)
         
