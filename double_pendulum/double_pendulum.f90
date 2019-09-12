@@ -43,6 +43,17 @@ program double_pendulum
         
         k11 = T*omega1(i)
         
+        k21 = T*omega2(i)
+
+        k31 = h*aceleracao_angulo1(theta1(i), theta2(i), omega1(i), omega2(i))
+
+        k41 = h*aceleracao_angulo2(theta1(i), theta2(i), omega1(i), omega2(i))
+
+        
+
+
+
+
         k12 = T*(omega1(i) + k11/2D0)
         
         k13 = T*(omega1(i) + k12/2D0)
@@ -51,7 +62,7 @@ program double_pendulum
         
         theta1(i+1) = theta1(i) + (k11 + 2*k12 + 2*k13 + k14)/6D0
 
-        k21 = T*omega2(i)
+        
         
         k22 = T*(omega2(i) + k21/2D0)
         
@@ -61,15 +72,15 @@ program double_pendulum
         
         theta2(i+1) = theta2(i) + (k21 + 2*k22 + 2*k23 + k24)/6D0
 
-        ! k31 = h*funcao_runge_kutta(t, w)
         
-        ! k32 = h*funcao_runge_kutta(t + h/2D0, w + k31/2D0)
         
-        ! k33 = h*funcao_runge_kutta(t + h/2D0, w + k32/2D0)
+        k32 = h*aceleracao_angulo1(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
         
-        ! k34 = h*funcao_runge_kutta(t + h, w + k33)
+        k33 = h*aceleracao_angulo1(w + k32/2D0)
         
-        ! omega1 = omega1 + (k31 + 2*k32 + 2*k33 + k34)/6D0
+        k34 = h*aceleracao_angulo1(w + k33)
+        
+        omega1(i+1) = omega1(i) + (k31 + 2*k32 + 2*k33 + k34)/6D0
         
 
 
