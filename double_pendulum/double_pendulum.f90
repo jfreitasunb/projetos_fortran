@@ -16,31 +16,46 @@ program double_pendulum
 
     read*, L1, theta1, m1, L2, theta2, m2
 
-    ! do i=1,n
+    do i=1,n
         
-    !     k11 = h1*funcao_runge_kutta_1(t, w1)
+        k11 = h*theta1
         
-    !     k21 = h1*funcao_runge_kutta_1(t + h1/2D0, w1 + k11/2D0)
+        k12 = h*(theta1 + k11/2D0)
         
-    !     k31 = h1*funcao_runge_kutta_1(t + h1/2D0, w + k21/2D0)
+        k13 = h*(theta1 + k12/2D0)
         
-    !     k41 = h1*funcao_runge_kutta_1(t + h1, w1 + k31)
+        k14 = h*(theta1 + k13)
         
-    !     w1 = w1 + (k11 + 2*k21 + 2*k31 + k41)/6D0
+        theta1 = theta1 + (k11 + 2*k12 + 2*k13 + k14)/6D0
 
-    !     k12 = h2*funcao_runge_kutta_2(t, w2)
+        k21 = h*theta2
         
-    !     k22 = h2*funcao_runge_kutta_2(t + h2/2D0, w2 + k12/2D0)
+        k22 = h*(theta2 + k21/2D0)
         
-    !     k32 = h2*funcao_runge_kutta_2(t + h2/2D0, w + k22/2D0)
+        k23 = h*(theta2 + k22/2D0)
         
-    !     k42 = h2*funcao_runge_kutta_2(t + h2, w2 + k32)
+        k24 = h*(theta2 + k23)
         
-    !     w2 = w2 + (k12 + 2*k22 + 2*k32 + k42)/6D0
-        
-    !     t = a1 + i*h2
+        theta2 = theta2 + (k21 + 2*k22 + 2*k23 + k24)/6D0
 
-    ! enddo
+        k31 = h*funcao_runge_kutta(t, w)
+        
+        k32 = h*funcao_runge_kutta(t + h/2D0, w + k31/2D0)
+        
+        k33 = h*funcao_runge_kutta(t + h/2D0, w + k32/2D0)
+        
+        k34 = h*funcao_runge_kutta(t + h, w + k33)
+        
+        omega1 = omega1 + (k31 + 2*k32 + 2*k33 + k34)/6D0
+        
+
+
+
+
+        t = a + i*h
+
+        write(11,*)t, w
+    enddo
 
 
     contains
