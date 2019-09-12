@@ -6,7 +6,7 @@ program double_pendulum
     real (kind = extra) :: x1, y1, L1, theta1inicial, m1, x2, y2, L2, theta2inicial, m2, omega1, omega2 !Posicao, comprimento, angulo e massa dos pêndulos
 
     real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44
-    
+
     real (kind = extra), parameter :: PI = 4.D0*DATAN(1.D0)
 
     real (kind = extra), parameter :: g = 9.8D0
@@ -20,25 +20,25 @@ program double_pendulum
 
     ! do i=1,n
         
-        k11 = h*theta1
+        k11 = DT*theta1inicial
         
-        k12 = h*(theta1 + k11/2D0)
+        k12 = DT*(theta1inicial + k11/2D0)
         
-        k13 = h*(theta1 + k12/2D0)
+        k13 = DT*(theta1inicial + k12/2D0)
         
-        k14 = h*(theta1 + k13)
+        k14 = DT*(theta1inicial + k13)
         
-        theta1 = theta1 + (k11 + 2*k12 + 2*k13 + k14)/6D0
+        theta1inicial = theta1inicial + (k11 + 2*k12 + 2*k13 + k14)/6D0
 
-        k21 = h*theta2
+        k21 = DT*theta2inicial
         
-        k22 = h*(theta2 + k21/2D0)
+        k22 = DT*(theta2inicial + k21/2D0)
         
-        k23 = h*(theta2 + k22/2D0)
+        k23 = DT*(theta2inicial + k22/2D0)
         
-        k24 = h*(theta2 + k23)
+        k24 = DT*(theta2inicial + k23)
         
-        theta2 = theta2 + (k21 + 2*k22 + 2*k23 + k24)/6D0
+        theta2inicial = theta2inicial + (k21 + 2*k22 + 2*k23 + k24)/6D0
 
         ! k31 = h*funcao_runge_kutta(t, w)
         
@@ -64,7 +64,7 @@ program double_pendulum
 
     function aceleracao_angulo1(theta1, theta2, omega1, omega2)
         
-        real (kind = extra) aceleracao_angulo1
+        real (kind = extra) aceleracao_angulo1, theta1, theta2, omega1, omega2
 
         aceleracao_angulo1 = (-g*(2*m1 + m2)*sin(theta1) - m2*g*sin(theta1 - 2*theta2)&
                                  - 2*sin(theta1 - theta2)*m2*(L2*omega2**2 + &
@@ -74,7 +74,7 @@ program double_pendulum
 
     function aceleracao_angulo2(theta1, theta2, omega1, omega2)
         
-        real (kind = extra) aceleracao_angulo2
+        real (kind = extra) aceleracao_angulo2, theta1, theta2, omega1, omega2
 
         aceleracao_angulo2 = (2*sin(theta1 - theta2)*(omega1**2*L1*(m1 + m2)&
                                 + g*(m1 + m2)*cos(theta1) + omega2**2*L2*m2*cos(theta1 - &
