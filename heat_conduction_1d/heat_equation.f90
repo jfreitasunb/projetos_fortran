@@ -68,10 +68,10 @@ program diffusion_1d
 
     do i = 1, Nx
         x = (i - 1)*dx
-        write(11,*) 0.0D0, u, u(i)
+        write(11,*) 0.0D0, x, u(i)
     enddo
 
-    write(11, *) ' '
+    write(11, *)' '
 
     !------------------------------------------------------------------------------------------
     !----------Calculate time evolution:
