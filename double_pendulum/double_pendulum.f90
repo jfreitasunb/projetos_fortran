@@ -45,15 +45,15 @@ program double_pendulum
 
     contains
 
-    function funcao_runge_kutta1(t, w)
+    function aceleracao_angulo1(t, w)
         
-        real (kind = extra) funcao_runge_kutta1, t, w
+        real (kind = extra) aceleracao_angulo1, t, w
 
-        funcao_runge_kutta1 = (-g*(2*m1 + m2)*sin(theta1) - m2*g*sin(theta1 - 2*theta2)&
+        aceleracao_angulo1 = (-g*(2*m1 + m2)*sin(theta1) - m2*g*sin(theta1 - 2*theta2)&
                                  - 2*sin(theta1 - theta2)*m2*(L2*omega2**2 + &
                                     L1*omega1**2*cos(theta1 - theta2)))&
                                 /(L1*(2*m1 + m2 - m2*cos(2*theta1 - 2*theta2)))
-    end function funcao_runge_kutta1
+    end function aceleracao_angulo1
 
     function funcao_runge_kutta2(t, w)
         
