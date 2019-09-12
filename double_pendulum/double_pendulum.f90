@@ -5,6 +5,8 @@ program double_pendulum
 
     real (kind = extra) :: x1, y1, L1, theta1inicial, m1, x2, y2, L2, theta2inicial, m2, omega1, omega2 !Posicao, comprimento, angulo e massa dos pêndulos
 
+    real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44
+    
     real (kind = extra), parameter :: PI = 4.D0*DATAN(1.D0)
 
     real (kind = extra), parameter :: g = 9.8D0
