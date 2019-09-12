@@ -59,7 +59,10 @@ program double_pendulum
         
         real (kind = extra) aceleracao_angulo2, t, w
 
-        aceleracao_angulo2 = cos(2*t) + sin(3*t)
+        aceleracao_angulo2 = (2*sin(theta1 - theta2)*(omega1**2*L1*(m1 + m2)&
+                                + g*(m1 + m2)*cos(theta1) + omega2**2*L2*m2*cos(theta1 - &
+                                    theta2)))/(L2*(2*m1 + m2 - m2*cos(2*theta1 -&
+                                     2*theta2)))
     end function aceleracao_angulo2
 
     
