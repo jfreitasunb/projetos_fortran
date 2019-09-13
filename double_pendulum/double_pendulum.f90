@@ -88,23 +88,26 @@ program double_pendulum
 
         omega2(i+1) = omega2(i) + (k41 + 2*k42 + 2*k43 + k44)/6D0
 
-        ! if (theta1(i+1) > PI ) theta1(i+1)=theta1(i+1)-2.*PI
-        ! if (theta1(i+1) < -PI) theta1(i+1)=theta1(i+1)+2.*PI
-        ! if (theta2(i+1) > PI ) theta2(i+1)=theta2(i+1)-2.*PI
-        ! if (theta2(i+1) < -PI) theta2(i+1)=theta2(i+1)+2.*PI
+        if (theta1(i+1) > PI ) theta1(i+1)=theta1(i+1)-2.*PI
+        if (theta1(i+1) < -PI) theta1(i+1)=theta1(i+1)+2.*PI
+        if (theta2(i+1) > PI ) theta2(i+1)=theta2(i+1)-2.*PI
+        if (theta2(i+1) < -PI) theta2(i+1)=theta2(i+1)+2.*PI
+
+        if (isnan(omega1(i))) then
+            print*,(omega1(i))
+            exit
+        endif
 
         if (i >= n - 1) exit
 
         ! T = T + i*DT
-
-        ! write(*,*) theta1(i),theta2(i), omega1(i), omega2(i)
     enddo
 
     !The results are saved in a file
     OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
 
     do i=1,n
-        write(11,*) theta1(i), theta2(i), omega1(i), omega2(i)
+        write(11,*) theta1(i), theta2(i)
     end do
 
     close(11)
