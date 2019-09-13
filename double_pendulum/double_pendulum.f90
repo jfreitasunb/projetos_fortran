@@ -55,27 +55,27 @@ program double_pendulum
         
         k22 = T*(omega2(i) + k21/2D0)
 
-        k32 = h*aceleracao_angulo1(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
+        k32 = h*aceleracao_angulo1(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
 
-        k42 = h*aceleracao_angulo1(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
+        k42 = h*aceleracao_angulo2(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
 
         !Terceiro coeficiente
         k13 = T*(omega1(i) + k12/2D0)
         
         k23 = T*(omega2(i) + k22/2D0)
 
-        k33 = h*aceleracao_angulo1(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
+        k33 = h*aceleracao_angulo1(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
 
-        k43 = h*aceleracao_angulo2(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
+        k43 = h*aceleracao_angulo2(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
         
         !Quarto coeficiente
         k14 = T*(omega1(i) + k13)
 
         k24 = T*(omega2(i) + k23)
 
-        k34 = h*aceleracao_angulo1(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
+        k34 = h*aceleracao_angulo1(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
 
-        k44 = h*aceleracao_angulo2(theta1(i) + k31/2D0, theta1(i) + k31/2D0)
+        k44 = h*aceleracao_angulo2(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
 
 
         !Solucao dada pelo método de Runge-Kutta
@@ -85,7 +85,7 @@ program double_pendulum
             
         omega1(i+1) = omega1(i) + (k31 + 2*k32 + 2*k33 + k34)/6D0
 
-        omega1(i+1) = omega1(i) + (k31 + 2*k32 + 2*k33 + k34)/6D0
+        omega2(i+1) = omega2(i) + (k41 + 2*k42 + 2*k43 + k44)/6D0
 
         T = T + i*DT
 
