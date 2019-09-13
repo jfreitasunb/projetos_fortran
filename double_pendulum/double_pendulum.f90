@@ -15,7 +15,7 @@ program double_pendulum
 
     real (kind = extra), parameter :: DT = 0.0003D0 !Mudança no tempo.
 
-    integer, parameter :: n = 1000 !Numero de iterações
+    integer, parameter :: n = 500000 !Numero de iterações
 
     integer :: i, ERRO
 
@@ -97,17 +97,17 @@ program double_pendulum
 
         ! T = T + i*DT
 
-        write(*,*) theta1(i),theta2(i), omega1(i), omega2(i)
+        ! write(*,*) theta1(i),theta2(i), omega1(i), omega2(i)
     enddo
 
-    ! !The results are saved in a file
-    ! OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
+    !The results are saved in a file
+    OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
 
-    ! do i=1,n
-    !     write(*,*) theta1(i),theta2(i),omega1(i),omega2(i)
-    ! end do
+    do i=1,n
+        write(11,*) theta1(i), theta2(i), omega1(i), omega2(i)
+    end do
 
-    ! close(11)
+    close(11)
 
     contains
 
