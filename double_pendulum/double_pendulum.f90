@@ -7,7 +7,7 @@ program double_pendulum
 
     real (kind = extra), dimension(:), allocatable :: theta1, theta2, omega1, omega2
 
-    real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44, T
+    real (kind = extra) :: k11, k21, k31, k41, k12, k22, k32, k42, k13, k23, k33, k43, k14, k24, k34, k44
 
     real (kind = extra), parameter :: PI = 4.D0*DATAN(1.D0)
 
@@ -15,7 +15,7 @@ program double_pendulum
 
     real (kind = extra), parameter :: DT = 0.0003D0 !Mudança no tempo.
 
-    integer, parameter :: n = 30 !Numero de iterações
+    integer, parameter :: n = 1000 !Numero de iterações
 
     integer :: i, ERRO
 
@@ -37,49 +37,49 @@ program double_pendulum
 
     read*, L2, theta2(1), m2, omega2(1)
 
-    T = 0D0
+    ! T = 0D0
 
     do i=1,n
         
         !Primeiro coeficiente
-        k11 = T*omega1(i)
+        k11 = DT*omega1(i)
         
-        k21 = T*omega2(i)
+        k21 = DT*omega2(i)
 
-        k31 = T*aceleracao_angulo1(theta1(i), theta2(i), omega1(i), omega2(i))
+        k31 = DT*aceleracao_angulo1(theta1(i), theta2(i), omega1(i), omega2(i))
 
-        k41 = T*aceleracao_angulo2(theta1(i), theta2(i), omega1(i), omega2(i))
+        k41 = DT*aceleracao_angulo2(theta1(i), theta2(i), omega1(i), omega2(i))
 
         !Segundo coeficiente
-        k12 = T*(omega1(i) + k11/2D0)
+        k12 = DT*(omega1(i) + k11/2D0)
         
-        k22 = T*(omega2(i) + k21/2D0)
+        k22 = DT*(omega2(i) + k21/2D0)
 
-        k32 = T*aceleracao_angulo1(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
+        k32 = DT*aceleracao_angulo1(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
 
-        k42 = T*aceleracao_angulo2(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
+        k42 = DT*aceleracao_angulo2(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
 
         !Terceiro coeficiente
-        k13 = T*(omega1(i) + k12/2D0)
+        k13 = DT*(omega1(i) + k12/2D0)
         
-        k23 = T*(omega2(i) + k22/2D0)
+        k23 = DT*(omega2(i) + k22/2D0)
 
-        k33 = T*aceleracao_angulo1(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
+        k33 = DT*aceleracao_angulo1(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
 
-        k43 = T*aceleracao_angulo2(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
+        k43 = DT*aceleracao_angulo2(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
         
         !Quarto coeficiente
-        k14 = T*(omega1(i) + k13)
+        k14 = DT*(omega1(i) + k13)
 
-        k24 = T*(omega2(i) + k23)
+        k24 = DT*(omega2(i) + k23)
 
-        k34 = T*aceleracao_angulo1(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
+        k34 = DT*aceleracao_angulo1(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
 
-        k44 = T*aceleracao_angulo2(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
+        k44 = DT*aceleracao_angulo2(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
 
 
         !Solucao dada pelo método de Runge-Kutta
-        if (i+1 > n) exit
+
         theta1(i+1) = theta1(i) + (k11 + 2*k12 + 2*k13 + k14)/6D0
         
         theta2(i+1) = theta2(i) + (k21 + 2*k22 + 2*k23 + k24)/6D0
@@ -88,7 +88,14 @@ program double_pendulum
 
         omega2(i+1) = omega2(i) + (k41 + 2*k42 + 2*k43 + k44)/6D0
 
-        T = T + i*DT
+        ! if (theta1(i+1) > PI ) theta1(i+1)=theta1(i+1)-2.*PI
+        ! if (theta1(i+1) < -PI) theta1(i+1)=theta1(i+1)+2.*PI
+        ! if (theta2(i+1) > PI ) theta2(i+1)=theta2(i+1)-2.*PI
+        ! if (theta2(i+1) < -PI) theta2(i+1)=theta2(i+1)+2.*PI
+
+        if (i >= n - 1) exit
+
+        ! T = T + i*DT
 
         write(*,*) theta1(i),theta2(i), omega1(i), omega2(i)
     enddo
