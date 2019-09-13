@@ -46,36 +46,36 @@ program double_pendulum
         
         k21 = T*omega2(i)
 
-        k31 = h*aceleracao_angulo1(theta1(i), theta2(i), omega1(i), omega2(i))
+        k31 = T*aceleracao_angulo1(theta1(i), theta2(i), omega1(i), omega2(i))
 
-        k41 = h*aceleracao_angulo2(theta1(i), theta2(i), omega1(i), omega2(i))
+        k41 = T*aceleracao_angulo2(theta1(i), theta2(i), omega1(i), omega2(i))
 
         !Segundo coeficiente
         k12 = T*(omega1(i) + k11/2D0)
         
         k22 = T*(omega2(i) + k21/2D0)
 
-        k32 = h*aceleracao_angulo1(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
+        k32 = T*aceleracao_angulo1(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
 
-        k42 = h*aceleracao_angulo2(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
+        k42 = T*aceleracao_angulo2(theta1(i) + k11/2D0, theta2(i) + k21/2D0, omega1(i) + k31/2D0, theta2(i) + k41/2D0)
 
         !Terceiro coeficiente
         k13 = T*(omega1(i) + k12/2D0)
         
         k23 = T*(omega2(i) + k22/2D0)
 
-        k33 = h*aceleracao_angulo1(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
+        k33 = T*aceleracao_angulo1(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
 
-        k43 = h*aceleracao_angulo2(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
+        k43 = T*aceleracao_angulo2(theta1(i) + k12/2D0, theta2(i) + k22/2D0, omega1(i) + k32/2D0, omega2(i) + k42/2D0)
         
         !Quarto coeficiente
         k14 = T*(omega1(i) + k13)
 
         k24 = T*(omega2(i) + k23)
 
-        k34 = h*aceleracao_angulo1(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
+        k34 = T*aceleracao_angulo1(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
 
-        k44 = h*aceleracao_angulo2(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
+        k44 = T*aceleracao_angulo2(theta1(i) + k13, theta2(i) + k23, omega1(i) + k33, omega2(i) + k43)
 
 
         !Solucao dada pelo método de Runge-Kutta
@@ -98,7 +98,7 @@ program double_pendulum
     end do
 
     close(11)
-    
+
     contains
 
     function aceleracao_angulo1(theta1, theta2, omega1, omega2)
