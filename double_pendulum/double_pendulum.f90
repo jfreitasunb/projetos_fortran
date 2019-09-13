@@ -15,9 +15,12 @@ program double_pendulum
 
     real (kind = extra), parameter :: DT = 0.0003D0 !Mudança no tempo.
 
-    integer, parameter :: n = 500000 !Numero de iterações
+    integer :: i, ERRO, n
 
-    integer :: i, ERRO
+    !-----------Leitura dos dados iniciais
+    print*, '#Entre com o numero de iteraçoes: '
+
+    read*, n
 
     allocate (theta1(1:n), STAT=ERRO)
     
@@ -106,8 +109,15 @@ program double_pendulum
     !The results are saved in a file
     OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
 
+    ! write(11,*)'x1, y1, x2, y2, theta1, theta2'
+    
     do i=1,n
-        write(11,*) theta1(i), theta2(i)
+        x1 = L1*sin(theta1(i))
+        y1 = -L1*cos(theta1(i))
+
+        x2 = x1 + L2*sin(theta2(i))
+        y2 = y1 - L2*cos(theta2(i))
+        write(11,*) x1, y1, x2, y2
     end do
 
     close(11)
