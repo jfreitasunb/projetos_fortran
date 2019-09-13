@@ -15,7 +15,7 @@ program double_pendulum
 
     real (kind = extra), parameter :: DT = 0.0003D0 !Mudança no tempo.
 
-    integer, parameter :: n = 1000 !Numero de iterações
+    integer, parameter :: n = 30 !Numero de iterações
 
     integer :: i, ERRO
 
@@ -79,6 +79,7 @@ program double_pendulum
 
 
         !Solucao dada pelo método de Runge-Kutta
+        if (i+1 > n) exit
         theta1(i+1) = theta1(i) + (k11 + 2*k12 + 2*k13 + k14)/6D0
         
         theta2(i+1) = theta2(i) + (k21 + 2*k22 + 2*k23 + k24)/6D0
@@ -88,16 +89,18 @@ program double_pendulum
         omega2(i+1) = omega2(i) + (k41 + 2*k42 + 2*k43 + k44)/6D0
 
         T = T + i*DT
+
+        write(*,*) theta1(i),theta2(i), omega1(i), omega2(i)
     enddo
 
-    !The results are saved in a file
-    OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
+    ! !The results are saved in a file
+    ! OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
 
-    do i=1,n
-        wRITE(11,*) theta1(i),theta2(i),omega1(i),omega2(i)
-    end do
+    ! do i=1,n
+    !     write(*,*) theta1(i),theta2(i),omega1(i),omega2(i)
+    ! end do
 
-    close(11)
+    ! close(11)
 
     contains
 
