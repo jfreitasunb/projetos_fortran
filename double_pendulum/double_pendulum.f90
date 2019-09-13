@@ -88,11 +88,17 @@ program double_pendulum
         omega2(i+1) = omega2(i) + (k41 + 2*k42 + 2*k43 + k44)/6D0
 
         T = T + i*DT
-
-        ! write(11,*)t, w
     enddo
 
+    !The results are saved in a file
+    OPEN (UNIT=11,FILE='dou2.dat',STATUS='UNKNOWN')
 
+    do i=1,n
+        wRITE(11,*) theta1(i),theta2(i),omega1(i),omega2(i)
+    end do
+
+    close(11)
+    
     contains
 
     function aceleracao_angulo1(theta1, theta2, omega1, omega2)
