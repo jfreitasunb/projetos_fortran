@@ -8,7 +8,11 @@ replot 'dou2.dat' every ::i::i using 3:4:($5-$3):($6-$4) with vectors nohead;
 replot 'dou2.dat' every ::i::i using 3:4:(0.1) with circles fillstyle solid;
 replot 'dou2.dat' every ::i::i using 5:6:(0.15) with circles fillstyle solid;
 set terminal jpeg;
-set output sprintf("imagem_%1i%s",i,'.jpg');
+set output sprintf("jpg/imagem_%06i%s",i,'.jpg');
 replot;
 reset;
 i=i+1;}
+
+#Gerando animação
+#ffmpeg  -f image2  -r 30  -i 'jpg/imagem_%06d.jpg'  -vcodec libx264  -profile:v high444  -refs 16  -crf 0  -preset ultrafast animation.avi
+
