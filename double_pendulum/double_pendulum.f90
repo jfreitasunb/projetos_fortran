@@ -119,7 +119,7 @@ program double_pendulum
 
         x2 = x1 + L2*sin(theta2(i)*D_to_R)
         y2 = y1 - L2*cos(theta2(i)*D_to_R)
-        write(11,*) x1, y1, x2, y2
+        write(11,*) 0, (L1 + L2 + 2), x1, y1, x2, y2
     end do
 
     close(11)
